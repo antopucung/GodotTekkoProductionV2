@@ -1,11 +1,31 @@
 {
   "framework": "nextjs",
   "buildCommand": "bun run build",
-  "devCommand": "bun run dev",
   "installCommand": "bun install",
+  "env": {
+    "NEXT_PUBLIC_USE_MOCK_DATA": "true",
+    "NEXTAUTH_SECRET": "@nextauth-secret",
+    "MONGODB_URI": "@mongodb-uri"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_USE_MOCK_DATA": "true",
+      "DISABLE_ESLINT_PLUGIN": "true",
+      "SKIP_ENV_VALIDATION": "1"
+    }
+  },
   "functions": {
-    "app/api/**/*.ts": {
-      "maxDuration": 30
+    "src/app/api/health/database/route.ts": {
+      "maxDuration": 10
+    },
+    "src/app/api/courses/route.ts": {
+      "maxDuration": 10
+    },
+    "src/app/api/projects/route.ts": {
+      "maxDuration": 10
+    },
+    "src/app/api/products/route.ts": {
+      "maxDuration": 10
     }
   }
 }

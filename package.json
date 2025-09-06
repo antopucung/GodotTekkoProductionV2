@@ -13,6 +13,8 @@
     "format": "bunx biome format --write",
     "health-check": "node scripts/test-sanity-health.js",
     "health": "node scripts/test-sanity-health.js",
+    "seed:mongodb": "node scripts/seed-mongodb.js",
+    "db:health": "curl http://localhost:3000/api/health/database",
     "monitor": "node scripts/sanity-monitor.js",
     "monitor:detailed": "node scripts/sanity-monitor.js detailed",
     "monitor:watch": "node scripts/sanity-monitor.js monitor",
