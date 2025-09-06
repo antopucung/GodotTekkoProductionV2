@@ -3,8 +3,8 @@ import imageUrlBuilder from '@sanity/image-url'
 
 // Sanity client configuration with enhanced error handling and CORS support
 export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'mock-project',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   apiVersion: '2024-01-01',
   useCdn: process.env.NODE_ENV === 'production',
   token: process.env.SANITY_API_READ_TOKEN,
