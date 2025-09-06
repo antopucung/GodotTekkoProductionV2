@@ -1,5 +1,5 @@
+import React from 'react';
 import type { Metadata, Viewport } from "next";
-import React from 'react'
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { OnboardingManager } from "@/components/onboarding/OnboardingManager";
