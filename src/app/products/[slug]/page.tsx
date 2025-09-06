@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import React from 'react'
 import { notFound } from 'next/navigation'
 import { client } from '@/lib/sanity'
 import { SEOUtils } from '@/lib/seo-utils'
