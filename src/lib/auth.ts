@@ -4,6 +4,11 @@ import GitHubProvider from 'next-auth/providers/github'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { compare, hash } from 'bcryptjs'
 import { client } from './sanity'
+import { mockAuthOptions, getMockUserByEmail, getMockUserById, createMockUser, DEMO_ACCOUNTS } from './auth-mock'
+
+// Check if we should use mock auth
+const USE_MOCK_AUTH = process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true' ||
+                      !process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
 
 // User type matching our Sanity schema
 interface SanityUser {
@@ -46,7 +51,8 @@ interface SanityUser {
   }
 }
 
-export const authOptions: NextAuthOptions = {
+// Use mock auth if Sanity is not configured or mock data is enabled
+export const authOptions: NextAuthOptions = USE_MOCK_AUTH ? mockAuthOptions : {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
@@ -160,6 +166,11 @@ export const authOptions: NextAuthOptions = {
 
 // Sanity user management functions
 export async function getUserByEmail(email: string): Promise<SanityUser | null> {
+  // Use mock function if mock auth is enabled
+  if (USE_MOCK_AUTH) {
+    return getMockUserByEmail(email) as any
+  }
+
   try {
     const user = await client.fetch(
       `*[_type == "user" && email == $email][0] {
@@ -184,6 +195,11 @@ export async function getUserByEmail(email: string): Promise<SanityUser | null> 
 }
 
 export async function getUserById(id: string): Promise<SanityUser | null> {
+  // Use mock function if mock auth is enabled
+  if (USE_MOCK_AUTH) {
+    return getMockUserById(id) as any
+  }
+
   try {
     const user = await client.fetch(
       `*[_type == "user" && _id == $id][0] {
@@ -218,6 +234,11 @@ export async function createUser(userData: {
   name: string
   role?: 'user' | 'partner' | 'admin'
 }): Promise<SanityUser> {
+  // Use mock function if mock auth is enabled
+  if (USE_MOCK_AUTH) {
+    return createMockUser(userData) as any
+  }
+
   const hashedPassword = await hash(userData.password, 12)
 
   const newUser = {

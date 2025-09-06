@@ -93,8 +93,8 @@ export const sanityFetch = async (query: string, params?: any, options?: any) =>
 
 // Alternative client configuration for development
 export const devClient = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'mock-project',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   apiVersion: '2024-01-01',
   useCdn: false, // Always fetch fresh data in development
   token: process.env.SANITY_API_READ_TOKEN, // Fixed to match env variable
